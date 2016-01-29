@@ -23,7 +23,7 @@ def create_vlan(host, port, user, password, interface, vlan, ip, insecure):
 	intfc = re.compile(r'^(\D+)(\d+)$')
 	m = intfc.match(interface)
 	if m is None:
-		print "invalid interface name. Valid example: ", BASE
+		print("invalid interface name. Valid example: ", BASE)
 		return -1
 
 	data = '''
@@ -71,8 +71,7 @@ def create_vlan(host, port, user, password, interface, vlan, ip, insecure):
 	try:
 		result = requests.put(url, auth=(user, password), data=data, headers=headers, verify=not insecure)
 	except:
-		#print sys.exc_info()[0]
-		print str(sys.exc_info()[0])
+		print(str(sys.exc_info()[0]))
 		return -1
 
 	# we expect a 201 for success
@@ -80,7 +79,7 @@ def create_vlan(host, port, user, password, interface, vlan, ip, insecure):
 		return 0
 
 	# somethine went wrong
-	print result.status_code, result.text
+	print(result.status_code, result.text)
 	return -1
 
 
@@ -107,7 +106,7 @@ def main():
 		ip = netaddr.IPNetwork(args.prefix)
 	except netaddr.core.AddrFormatError, e:
 		parser.print_usage()
-		print e
+		print(e)
 		return -1
 
 	# insecure?
