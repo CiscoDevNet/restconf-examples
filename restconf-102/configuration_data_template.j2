@@ -1,8 +1,0 @@
----
-{ % for subscriber in data % }
-  { % for data in subscriber % }
-  - vlan   : {{data.vlan}}
-    prefix : {{data.prefix}}
-    route  : {{data.route}}
-  {% endfor %}
-{% endfor %}

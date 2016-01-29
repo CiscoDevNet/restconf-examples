@@ -19,7 +19,7 @@ BASE = 'GigabitEthernet3'
 
 
 def create_vlan(host, port, user, password, interface, vlan, ip, insecure):
-
+	"""Function to create a subinterface on CSR1000V."""
 	intfc = re.compile(r'^(\D+)(\d+)$')
 	m = intfc.match(interface)
 	if m is None:
@@ -32,7 +32,7 @@ def create_vlan(host, port, user, password, interface, vlan, ip, insecure):
 	    "name": "%s.%d",
 	    "encapsulation": {
 	      "dot1Q": {
-		"vlan-id": %d
+		    "vlan-id": %d
 	      }
 	    },
 	    %s
@@ -44,11 +44,11 @@ def create_vlan(host, port, user, password, interface, vlan, ip, insecure):
 		ipdata = '''
 		    "ipv6": {
 		      "address": {
-			"prefix-list": [
-			  {
-			    "prefix": "%s"
-			  }
-			]
+			    "prefix-list": [
+			      {
+			        "prefix": "%s"
+			      }
+			    ]
 		      }
 		    }
 		''' % str(ip)
@@ -56,10 +56,10 @@ def create_vlan(host, port, user, password, interface, vlan, ip, insecure):
 		ipdata = '''
 		    "ip": {
 		      "address": {
-			"primary": {
-			  "address": "%s",
-			  "mask": "%s"
-			}
+			    "primary": {
+			      "address": "%s",
+			      "mask": "%s"
+			    }
 		      }
 		    }
 		''' % (ip.ip, ip.netmask)
