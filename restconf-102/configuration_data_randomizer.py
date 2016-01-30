@@ -38,7 +38,7 @@ def main():
     args = parser.parse_args()
     print('################################################')
     print('Here is an example way to run the script: ')
-    print("python create_subinterface.py {v} {r} --insecure".format(v=random_vlan(), r=random_address(args.base, args.length)))
+    print("python3 create_subinterface.py {v} {r} --insecure".format(v=random_vlan(), r=random_address(args.base, args.length)))
     print('################################################')
 
 
