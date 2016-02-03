@@ -1,4 +1,4 @@
-# Example of the old way to get the interface status and parse results
+# Example of how to get the interface status and parse results via RestConf
 
 # * THIS SAMPLE APPLICATION AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY
 # * OF ANY KIND BY CISCO, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED
@@ -20,23 +20,41 @@
 # * SUPPLIERS HAVE BEEN INFORMED OF THE POSSIBILITY THEREOF.-->
 
 
-set interfaces [regexp -all -line -inline "^(FastEthernet|GigabitEthernet)(\[0-9.\]+) +(\[0-9.\]+).*(up|down)" [exec "show ip int brief"]]
+import sys, re, argparse, netaddr, requests
 
-set index 0
-set flagDown 0
-while {$index < [llength $interfaces]} {
-  set interface "[lindex $interfaces [expr $index + 1]] [lindex $interfaces [expr $index + 2]]"
-  set ip "[lindex $interfaces [expr $index + 3]]"
-  set status "[lindex $interfaces [expr $index + 4]]"
-  if {$status == "down"} {
-    set flagDown 1
- }
-  set index [expr $index + 5]
-  puts "interface:  $interface   ip:  $ip    status: $status"
-}
+requests.packages.urllib3.disable_warnings()
 
-if {$flagDown == 0} {
-  puts "All interfaces are up"
-} else {
-  puts "At least one interface is down"
-}
+URL  = "https://ios-xe-mgmt.cisco.com:9443"
+USER = 'root'
+PASS = 'C!sc0123'
+
+
+url       = URL + "/api/operational/interfaces?deep"
+headers   = {'content-type': 'application/vnd.yang.data+json', 'accept': 'application/vnd.yang.data+json'}
+try:
+	result = requests.get(url, auth=(USER,PASS),headers=headers, verify=False)
+	#print (result.text)
+	#convert response to json format
+	r_json=result.json()
+	flagDown=0
+	for record in r_json["ietf-interfaces:interfaces"]["interface"]: 
+		print ("{0:<40}".format("interface:  " + record["name"]), end="")
+		print ("{0:<5}".format("ip:"), end="")
+		if('address' in record["ietf-ip:ipv4"]):
+			print ("{0:<15}".format(record["ietf-ip:ipv4"]["address"][0]["ip"]), end="")
+		else:
+			print ("{0:<15}".format("No IPv4"), end="")
+		print("{0:<9}".format("status:  "), end="")
+		print(str(record["enabled"]))
+		if(record["enabled"]==False):
+			flagDown=1
+	print("")
+	if(flagDown):
+		print ("At least one interface is down")
+	else:
+		print ("All interfaces are up")
+except:
+	print ("Exception: " + str(sys.exc_info()[0]) + "  " + str(sys.exc_info[1]))
+	print ("Error: " + str(result.status_code), result.text)
+
+
