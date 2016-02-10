@@ -17,9 +17,9 @@ PASS = 'C!sc0123'
 
 
 def get_configured_interfaces():
-    """Retrieving state data (routes) from RESTconf."""
+    """Retrieving state data (routes) from RESTCONF."""
     url = "https://{h}:{p}/api/running/interfaces".format(h=HOST, p=PORT)
-    # RESTconf media types for REST API headers
+    # RESTCONF media types for REST API headers
     headers = {'Content-Type': 'application/vnd.yang.data+json',
                'Accept': 'application/vnd.yang.data+json'}
     # this statement performs a GET on the specified url
