@@ -13,7 +13,7 @@ import random
 import sys
 
 # base prefix to subnet
-BASE = '1.0.0.0/19'
+BASE = '1.0.0.1/19'
 # prefix length of resulting subnets
 LENGTH = 31
 
