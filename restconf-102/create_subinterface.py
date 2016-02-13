@@ -90,38 +90,38 @@ def create_vlan(host, port, user, password, interface, vlan, ip, insecure):
 
 
 def main():
-        parser = argparse.ArgumentParser()
-        parser.add_argument('vlan', help = "VLAN number (1-4094)", type=int)
-        parser.add_argument('prefix', help = "IPv4 or IPv6 prefix")
-        parser.add_argument('--insecure', '-k', action='store_true', help = "relax SSL verification")
-        parser.add_argument('--interface', '-i', default=BASE, help = "interface name to use")
-        parser.add_argument('--user', '-u', default=USER, help = "user name on remote host")
-        parser.add_argument('--password', '-p', default=PASS, help = "password on remote host")
-        parser.add_argument('--port', '-P', default=PORT, help = "port on remote host")
-        parser.add_argument('--host', '-H', default=HOST, help = "remote host")
-        args = parser.parse_args()
+	parser = argparse.ArgumentParser()
+	parser.add_argument('vlan', help = "VLAN number (1-4094)", type=int)
+	parser.add_argument('prefix', help = "IPv4 or IPv6 prefix")
+	parser.add_argument('--insecure', '-k', action='store_true', help = "relax SSL verification")
+	parser.add_argument('--interface', '-i', default=BASE, help = "interface name to use")
+	parser.add_argument('--user', '-u', default=USER, help = "user name on remote host")
+	parser.add_argument('--password', '-p', default=PASS, help = "password on remote host")
+	parser.add_argument('--port', '-P', default=PORT, help = "port on remote host")
+	parser.add_argument('--host', '-H', default=HOST, help = "remote host")
+	args = parser.parse_args()
 
 	# check for valid VLAN ID
 	if args.vlan < 1 or args.vlan > 4094:
 		parser.print_usage()
-		print "invalid VLAN ID %s" % str(args.vlan)
+		print ("invalid VLAN ID %s" % str(args.vlan))
 		return -1
 
 	# check for valid prefix
 	try:
 		ip = netaddr.IPNetwork(args.prefix)
-	except netaddr.core.AddrFormatError, e:
+	except netaddr.core.AddrFormatError as e:
 		parser.print_usage()
 		print(e)
 		return -1
+
 
 	# insecure?
 	if args.insecure:
 		requests.packages.urllib3.disable_warnings()
 
-        return create_vlan(args.host, args.port, args.user, args.password,
-			args.interface, args.vlan, ip, args.insecure)
+	return create_vlan(args.host, args.port, args.user, args.password,args.interface, args.vlan, ip, args.insecure)
 
 
 if __name__ == '__main__':
-        sys.exit(main())
+	sys.exit(main())

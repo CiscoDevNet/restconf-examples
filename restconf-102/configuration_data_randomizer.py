@@ -12,6 +12,7 @@ import netaddr
 import random
 import sys
 
+
 # base prefix to pick random address
 ADDR_BASE = '1.0.0.0/20'
 # base prefix to pick random route
@@ -44,13 +45,13 @@ def random_route(base, length):
 def main():
     """Main method to randomize example configuration data."""
     parser = argparse.ArgumentParser()
-    parser.add_argument('--addr_base', '-b', default=ADDR_BASE, help="base prefix to pick address")
-    parser.add_argument('--route_base', '-b', default=ROUTE_BASE, help="base prefix to subnet")
+    parser.add_argument('--addr_base', '-a', default=ADDR_BASE, help="base prefix to pick address")
+    parser.add_argument('--route_base', '-r', default=ROUTE_BASE, help="base prefix to subnet")
     parser.add_argument('--length', '-l', default=LENGTH, help="prefix length of resulting subnets", type=int)
     args = parser.parse_args()
     print('################################################')
     print('Here is an example way to run the script: ')
-    print("python3 create_subinterface.py {v} {a} --insecure".format(v=random_vlan(), a=random_address(args.base)))
+    print("python3 create_subinterface.py {v} {a} --insecure".format(v=random_vlan(), a=random_address(args.addr_base)))
     print('################################################')
 
 

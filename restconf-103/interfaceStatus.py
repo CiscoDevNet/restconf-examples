@@ -20,35 +20,43 @@
 # * SUPPLIERS HAVE BEEN INFORMED OF THE POSSIBILITY THEREOF.-->
 
 
-import sys, re, argparse, netaddr, requests
+import sys, requests
 
-requests.packages.urllib3.disable_warnings()
 
-URL  = "https://ios-xe-mgmt.cisco.com:9443"
+#CSR1K Always-on Sandbox Router url and access credentials
+URL  = "http://ios-xe-mgmt.cisco.com:9443"
 USER = 'root'
 PASS = 'C!sc0123'
 
-
+#api call to get information of all interfaces on the router
 url       = URL + "/api/operational/interfaces?deep"
+#yang model headers required for RESTCONF
 headers   = {'content-type': 'application/vnd.yang.data+json', 'accept': 'application/vnd.yang.data+json'}
 try:
-	result = requests.get(url, auth=(USER,PASS),headers=headers, verify=False)
-	#print (result.text)
+	#GET call to Router to get the interface data. SSL checking turned off.
+	result = requests.get(url, auth=(USER,PASS),headers=headers)
 	#convert response to json format
 	r_json=result.json()
+	#flag for tracking overall interface status
 	flagDown=0
+	#interate through the returned json data
 	for record in r_json["ietf-interfaces:interfaces"]["interface"]: 
-		print ("{0:<40}".format("interface:  " + record["name"]), end="")
+		#Print interface name to the screen
+		print ("{0:<35}".format("interface:  " + record["name"]), end="")
+		#Print interface ip to the screen
 		print ("{0:<5}".format("ip:"), end="")
 		if('address' in record["ietf-ip:ipv4"]):
 			print ("{0:<15}".format(record["ietf-ip:ipv4"]["address"][0]["ip"]), end="")
 		else:
 			print ("{0:<15}".format("No IPv4"), end="")
+		#Print interface status to the screen
 		print("{0:<9}".format("status:  "), end="")
 		print(str(record["enabled"]))
+		#if interface status is down set flag
 		if(record["enabled"]==False):
 			flagDown=1
 	print("")
+	#print overall interface status to screen
 	if(flagDown):
 		print ("At least one interface is down")
 	else:

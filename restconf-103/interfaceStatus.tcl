@@ -19,22 +19,31 @@
 # * PROFITS, OR LOST DATA, OR ANY OTHER INDIRECT DAMAGES EVEN IF CISCO OR ITS
 # * SUPPLIERS HAVE BEEN INFORMED OF THE POSSIBILITY THEREOF.-->
 
-
+#regular expression to call the CLI command 'show ip interface brief', capture and parse the returned data for interfaces with assign IP addresses.
 set interfaces [regexp -all -line -inline "^(FastEthernet|GigabitEthernet)(\[0-9.\]+) +(\[0-9.\]+).*(up|down)" [exec "show ip int brief"]]
 
+#variable to walk through the interfaces array of returned data.
 set index 0
+#variable to flag if an interface in 'down' status has been found.
 set flagDown 0
+#Loop through the interfaces array to the end.
 while {$index < [llength $interfaces]} {
+  #Assign the interface name and number to variable named interface
   set interface "[lindex $interfaces [expr $index + 1]] [lindex $interfaces [expr $index + 2]]"
+  #Assign the interface IP and number to variable named ip
   set ip "[lindex $interfaces [expr $index + 3]]"
+  #Assign the interface status and number to variable named status
   set status "[lindex $interfaces [expr $index + 4]]"
+  #if an interface status is down set the flag
   if {$status == "down"} {
     set flagDown 1
  }
+  #increment the counter to the next interface data
   set index [expr $index + 5]
+  #write captured interface data to the screen.
   puts "interface:  $interface   ip:  $ip    status: $status"
 }
-
+#Report final status of all reviewed interfaces
 if {$flagDown == 0} {
   puts "All interfaces are up"
 } else {

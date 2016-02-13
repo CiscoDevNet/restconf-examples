@@ -21,7 +21,7 @@ def main():
     """Main method that retrieves the hostname from CSR1000V via RESTCONF."""
 
     # url string to issue GET request
-    url = "https://{h}:{p}/api/running/native/hostname".format(h=HOST, p=PORT)
+    url = "http://{h}:{p}/api/running/native/hostname".format(h=HOST, p=PORT)
 
     # RESTCONF media types for REST API headers
     headers = {'Content-Type': 'application/vnd.yang.data+json',
