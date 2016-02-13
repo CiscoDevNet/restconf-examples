@@ -18,12 +18,6 @@ PASS = 'C!sc0123'
 BASE = 'GigabitEthernet3'
 
 
-# HOST = '172.16.126.250'
-# PORT = 8008
-# USER = 'cisco'
-# PASS = 'cisco'
-# BASE = 'GigabitEthernet3'
-
 def create_vlan(host, port, user, password, interface, vlan, ip, insecure):
 	"""Function to create a subinterface on CSR1000V."""
 	intfc = re.compile(r'^(\D+)(\d+)$')
