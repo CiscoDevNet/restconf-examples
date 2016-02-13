@@ -18,6 +18,12 @@ PASS = 'C!sc0123'
 BASE = 'GigabitEthernet3'
 
 
+# HOST = '172.16.126.250'
+# PORT = 8008
+# USER = 'cisco'
+# PASS = 'cisco'
+# BASE = 'GigabitEthernet3'
+
 def create_vlan(host, port, user, password, interface, vlan, ip, insecure):
 	"""Function to create a subinterface on CSR1000V."""
 	intfc = re.compile(r'^(\D+)(\d+)$')
@@ -65,7 +71,7 @@ def create_vlan(host, port, user, password, interface, vlan, ip, insecure):
 		''' % (ip.ip, ip.netmask)
 
 	data      = data % (m.group(1), m.group(2), vlan, vlan, ipdata)
-	url       = "https://%s:%d/api/running/native/interface/%s/%s.%d" % (host, port, m.group(1), m.group(2), vlan)
+	url       = "http://%s:%d/api/running/native/interface/%s/%s.%d" % (host, port, m.group(1), m.group(2), vlan)
 	headers   = {'content-type': 'application/vnd.yang.data+json', 'accept': 'application/vnd.yang.data+json'}
 
 	try:
