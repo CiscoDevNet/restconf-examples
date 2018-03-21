@@ -1,57 +1,44 @@
-# DevNet Writing Guidelines (Public)
+## Cisco DevNet Learning Labs: Sample code for RESTCONF
 
-Welcome to the DevNet Writing Guidelines. This repo contains DevNet's guidelines on creating learning labs, code samples, slides and setting up sandboxes for labs. 
+These scripts use RESTCONF to demonstrate various configurations you can run as examples in the [DevNet Sandbox](https://developer.cisco.com/sandbox/).
 
-The topics below are some of the topics of most interest to newbies.  For more the complete set of writing guidelines see this repo's [wiki](https://github.com/CiscoDevNet/devnet-writing-guidelines/wiki) page.
+Contributions are welcome, and we are glad to review changes through pull requests. See [contributing.md](contributing.md) for details.
 
-<b>On this page</b><br>
+The goal of DevNet sample code and learning labs is to ensure a 'hands-on' learning approach rather than just theory or instructions.
 
-> [Learning Labs](#learning-labs)<br>
-    [How do I author a learning lab?](#learning-labs)<br>
->   [Templates](#templates)<br>
-> [Code Conventions](#code-conventions)<br>
-> [Author Scripts](##author-scripts)<br>
-> [Recommended Tools](##recommended-tools)<br>
+## About these Learning Labs
 
-## Learning Labs
+These samples can be run against Cisco hardware available in the [DevNet Sandbox](https://developer.cisco.com/sandbox/). The VLAN example code provisions (or deletes) a VLAN interface on an existing (physical) interface that is connected to an upstream switch via a 802.1Q trunk.
 
-The source markdown for all of DevNet's learning labs are stored in the repos of the [CiscoDevNet](https://github.com/CiscoDevNet) organization. 
+## Contributing
 
-If you want to create and publish a lab on the DevNet site, you must commit the lab and its associated files to a repo within the [CiscoDevNet](https://github.com/CiscoDevNet) organization.  The lab's markdown, images, JSON metadata, etc must exist in a certain directory structure.  The next section explains how to do that. 
+These learning modules are for public consumption, so you must ensure that you have the rights to any content that you contribute.
 
-### How do I author a learning lab?
+Write your content in Markdown. DevNet staff reviews content according to the [Cisco Style Guide](http://www-author.cisco.com/c/en/us/td/docs/general/style/guide/Latest/stylegd.html). (Link available on Cisco VPN only.)
 
-See the wiki page: [How To Create A New Lab](https://github.com/CiscoDevNet/devnet-writing-guidelines/wiki/How-To-Create-A-New-Lab)
+#### Publishing Requirements
 
-### Templates
+To create and publish a new lab, take the following steps:
+- Add a new folder under `labs`.
+- Create a JSON file with the same name as the `labs/`_folder_ name.
+- Create markdown files named 1.md, 2.md, and so on; refer to those files in the `labs/`_folder_ JSON file.
+- Ensure that the JSON file contains appropriate page titles and file references.
+- Send a pull request to get the files committed and merged to `master` by a DevNet reviewer.
 
-There are two kinds of templates: one for labs and one for sample code. 
+A DevNet reviewer then creates a release on the repository with the latest `master` and publishes through the admin interface.
 
-#### Lab template
+#### Editors
 
-The learning lab template is stored in the following directory:
+You can write Markdown in a plain text editor, but there are many desktop and Web-based options that allow you to write and preview your work at the same time. We recommend Visual Studio Code [Download](https://code.visualstudio.com/) for several reasons:
+- Lightweight environment for coding (or writing Markdown)
+- Available on Mac OS, Linux or Windows
+- Github Client integration
+- Great Markdown preview features native in the editor
+- Intuitive operation and structure
 
-> https://github.com/CiscoDevNet/devnet-writing-guidelines/tree/master/labs
+You can validate a JSON file by using the [online formatter and validator](https://jsonformatter.curiousconcept.com).
 
+## Getting Involved
 
-#### Sample Code template
-
-The template for code samples is here:
-
-> https://github.com/CiscoDevNet/devnet-writing-guidelines/tree/master/code-samples
-
-## Code Conventions
-
-See the [wiki](https://github.com/CiscoDevNet/devnet-writing-guidelines/wiki) for the style guide on DevNet coding conventions.
-
-
-## Author Scripts
-
-The `scripts` folder contains python scripts that might be useful when authoring. You do not have to use these scripts to author labs. They are just helpful tools that other authors have created.
-
-For example, the `create_new_lab.py` script creates a directory structure and copies the template used to create a new lab. You could do the same thing manually.
-
-
-## Recommended Tools
-
-Check the [wiki](https://github.com/CiscoDevNet/devnet-writing-guidelines/wiki/Tools-to-Write-Learning-Labs) section for recommended tools.
+* If you'd like to contribute to an existing lab, refer to [contributing.md](contributing.md).
+* If you're interested in creating a new Cisco DevNet Learning Lab, please contact a DevNet administrator for guidance.
